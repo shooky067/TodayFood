@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>나의 식단표</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF8A3D"/>
+      <stop offset="1" stop-color="#FFD0A8"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="113" fill="url(#bg)"/>
+  <g transform="translate(256 256) scale(1.0) translate(-256 -256)">
+  <!-- 숟가락·젓가락 (식판 뒤에서 교차) -->
+  <g transform="rotate(-30 256 118)">
+    <rect x="247" y="86" width="18" height="92" rx="9" fill="#FFF8EC"/>
+    <ellipse cx="256" cy="62" rx="24" ry="32" fill="#FFF8EC"/>
+  </g>
+  <g transform="rotate(30 256 118)">
+    <rect x="239" y="28" width="15" height="150" rx="7.5" fill="#FFD54F"/>
+    <rect x="261" y="28" width="15" height="150" rx="7.5" fill="#FFD54F"/>
+  </g>
+  <!-- 식판 -->
+  <rect x="78" y="165" width="356" height="290" rx="40" fill="#A8430A" opacity="0.28"/>
+  <rect x="78" y="156" width="356" height="290" rx="40" fill="#FFF8EC"/>
+  <!-- 4칸 -->
+  <rect x="94"  y="172" width="156" height="123" rx="26" fill="#FFD54F"/>
+  <rect x="262" y="172" width="156" height="123" rx="26" fill="#9AD97B"/>
+  <rect x="94"  y="307" width="156" height="123" rx="26" fill="#FF8A3D"/>
+  <rect x="262" y="307" width="156" height="123" rx="26" fill="#FFB7CB"/>
+  <!-- 아침: 반숙 계란 프라이 -->
+  <path d="M122 232 C118 205 150 190 178 194 C208 190 234 208 230 238 C234 262 207 282 178 277 C160 287 126 271 128 253 C118 249 120 241 122 232 Z" fill="#FFF8EC"/>
+  <circle cx="180" cy="237" r="24" fill="#FF8A3D"/>
+  <!-- 점심: 브로콜리 -->
+  <rect x="330" y="246" width="20" height="40" rx="8" fill="#2E8B4E"/>
+  <circle cx="312" cy="232" r="24" fill="#2E8B4E"/>
+  <circle cx="368" cy="232" r="24" fill="#2E8B4E"/>
+  <circle cx="340" cy="212" r="28" fill="#2E8B4E"/>
+  <circle cx="340" cy="238" r="27" fill="#2E8B4E"/>
+  <!-- 저녁: 밥그릇 + 흰 밥 + 김 -->
+  <path d="M124 372 C124 332 148 318 172 318 C196 318 220 332 220 372 Z" fill="#FFF8EC"/>
+  <rect x="158" y="328" width="28" height="32" rx="6" fill="#2E8B4E"/>
+  <path d="M116 366 H228 C228 400 204 420 172 420 C140 420 116 400 116 366 Z" fill="#2E8B4E"/>
+  <!-- 간식: 도넛 -->
+  <circle cx="340" cy="368" r="48" fill="#FF8A3D"/>
+  <circle cx="340" cy="368" r="38" fill="#FFF8EC"/>
+  <circle cx="375.7" cy="381.0" r="9" fill="#FFF8EC"/><circle cx="346.6" cy="405.4" r="9" fill="#FFF8EC"/><circle cx="310.9" cy="392.4" r="9" fill="#FFF8EC"/><circle cx="304.3" cy="355.0" r="9" fill="#FFF8EC"/><circle cx="333.4" cy="330.6" r="9" fill="#FFF8EC"/><circle cx="369.1" cy="343.6" r="9" fill="#FFF8EC"/>
+  <rect x="318" y="346" width="12" height="6" rx="3" fill="#FFD54F" transform="rotate(-25 324 349)"/>
+  <rect x="352" y="341" width="12" height="6" rx="3" fill="#9AD97B" transform="rotate(30 358 344)"/>
+  <rect x="364" y="372" width="12" height="6" rx="3" fill="#FFD54F" transform="rotate(70 370 375)"/>
+  <rect x="306" y="378" width="12" height="6" rx="3" fill="#9AD97B" transform="rotate(-60 312 381)"/>
+  <rect x="336" y="396" width="12" height="6" rx="3" fill="#2E8B4E" transform="rotate(10 342 399)"/>
+  <circle cx="340" cy="368" r="13" fill="#FFB7CB"/>
+</g>
+</svg>
