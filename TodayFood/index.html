@@ -258,6 +258,72 @@ svg.i { width: 22px; height: 22px; display: block; fill: none; stroke: currentCo
   }
 }
 
+/* ===== 보기 전환 (주간/월간) ===== */
+.viewtabs {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 12px; padding: 4px;
+  background: var(--card); border: 1.5px solid var(--line); border-radius: 14px;
+}
+.vtab {
+  min-height: 44px; border: 0; border-radius: 10px; background: transparent; color: var(--muted);
+  font-weight: 600; font-size: 15px; cursor: pointer;
+  transition: background-color var(--ease), color var(--ease), transform var(--ease);
+}
+.vtab[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+
+/* ===== 월간 달력 ===== */
+.month { padding: 12px 0 calc(32px + env(safe-area-inset-bottom)); }
+.mgrid {
+  display: grid; grid-template-columns: repeat(7, minmax(0, 1fr));
+  background: var(--card); border: 1.5px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: var(--shadow);
+}
+.mdow { padding: 8px 0; text-align: center; font-size: 13px; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--line); }
+.mday {
+  display: flex; flex-direction: column; align-items: stretch; gap: 2px; min-width: 0; min-height: 88px;
+  padding: 4px 3px 6px; margin: 0; border: 0; border-radius: 0;
+  border-top: 1px solid var(--line); border-left: 1px solid var(--line);
+  background: var(--card); color: var(--text); text-align: left; cursor: pointer;
+  transition: background-color var(--ease), box-shadow var(--ease), transform var(--ease);
+}
+.mday:nth-child(7n + 1) { border-left: 0; }
+.mday:nth-child(-n + 14) { border-top: 0; }
+.mday.out { background: var(--bg); }
+.mday.out .mnum, .mday.out .mm { opacity: 0.5; }
+.mnum { font-size: 13px; font-weight: 700; line-height: 1.3; padding: 1px 3px; align-self: flex-start; border-radius: 999px; }
+.mday.today { box-shadow: inset 0 0 0 2px var(--accent); }
+.mday.today .mnum { background: var(--accent); color: var(--on-accent); padding: 1px 6px; }
+.mm {
+  display: block; min-width: 0; padding: 1px 4px; border-radius: 5px;
+  background: var(--mc); color: var(--text); font-size: 11px; line-height: 1.4;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.mm.m-b { --mc: var(--m-b); --mink: var(--m-b-ink); }
+.mm.m-l { --mc: var(--m-l); --mink: var(--m-l-ink); }
+.mm.m-d { --mc: var(--m-d); --mink: var(--m-d-ink); }
+.mm.m-s { --mc: var(--m-s); --mink: var(--m-s-ink); }
+.mm b { color: var(--mink); font-weight: 600; margin-right: 3px; }
+.mhint { color: var(--muted); font-size: 14px; margin: 10px 2px 0; }
+.mlegend { display: flex; flex-wrap: wrap; gap: 6px 12px; margin: 0 2px 10px; font-size: 13px; color: var(--muted); }
+.mlegend span { display: inline-flex; align-items: center; gap: 5px; }
+.mlegend i { width: 12px; height: 12px; border-radius: 4px; background: var(--mc); display: inline-block; }
+.day.flash { animation: flash 1.2s ease; }
+@keyframes flash { 0%, 40% { box-shadow: 0 0 0 3px var(--accent), var(--shadow-hover); } 100% { box-shadow: var(--shadow); } }
+/* 좁은 화면: 끼니 이름표 대신 색으로만 구분 */
+@media (max-width: 599px) {
+  .mm b { display: none; }
+  .mm { padding: 1px 3px; font-size: 10.5px; line-height: 1.3; border-radius: 4px; white-space: normal; word-break: break-all; }
+  .mi { display: block; }
+  .mi + .mi { margin-top: 1px; padding-top: 1px; border-top: 1px dashed rgba(0, 0, 0, 0.12); }
+  :root[data-theme="dark"] .mi + .mi { border-top-color: rgba(255, 255, 255, 0.14); }
+}
+@media (min-width: 600px) {
+  .mi + .mi::before { content: ", "; }
+}
+@media (min-width: 960px) {
+  .mday { min-height: 120px; padding: 6px 6px 8px; gap: 3px; }
+  .mnum { font-size: 14px; }
+  .mm { font-size: 12.5px; padding: 2px 6px; }
+}
+
 /* ===== 시트(대화상자) ===== */
 dialog {
   border: 0; padding: 0; margin: auto auto 0;
@@ -398,6 +464,9 @@ label.lbl { display: block; font-size: 14px; font-weight: 600; margin: 10px 0 4p
   .chip:not(:disabled):hover { background: var(--accent-soft-hover); border-color: var(--accent); transform: translateY(var(--lift)); box-shadow: var(--shadow-hover); }
   .chip-x:hover { color: var(--danger); background: var(--danger-soft); }
   .li:hover { background: var(--card-hover); }
+  .vtab[aria-pressed="false"]:hover { background: var(--accent-soft); color: var(--text); }
+  .mday:hover { background: var(--card-hover); box-shadow: inset 0 0 0 2px var(--accent); }
+  .mday.out:hover { background: var(--card-hover); }
   .li.editing:hover { background: var(--accent-soft); }
   .shop label:hover { background: var(--card-hover); border-color: var(--accent); }
   .sug button:hover { background: var(--accent-soft); }
@@ -412,6 +481,8 @@ label.lbl { display: block; font-size: 14px; font-weight: 600; margin: 10px 0 4p
 .cell:active { transform: scale(var(--press)); }
 .chip:not(:disabled):active, .chip-x:active { transform: scale(var(--press)); box-shadow: none; }
 .tbtn:active { transform: scale(var(--press)); }
+.vtab:active { transform: scale(var(--press)); }
+.mday:active { background: var(--card-hover); }
 .sug button:active { background: var(--accent-soft); }
 </style>
 </head>
@@ -429,7 +500,7 @@ label.lbl { display: block; font-size: 14px; font-weight: 600; margin: 10px 0 4p
         <button type="button" class="icon-btn" data-act="settings" aria-label="설정" title="설정"><span data-ico="gear"></span></button>
       </div>
     </div>
-    <nav class="weeknav" aria-label="주 이동">
+    <nav class="weeknav" aria-label="기간 이동">
       <button type="button" class="icon-btn" data-act="prev" aria-label="이전 주" title="이전 주"><span data-ico="left"></span></button>
       <div class="range" id="range" aria-live="polite"></div>
       <button type="button" class="icon-btn" data-act="next" aria-label="다음 주" title="다음 주"><span data-ico="right"></span></button>
@@ -439,12 +510,17 @@ label.lbl { display: block; font-size: 14px; font-weight: 600; margin: 10px 0 4p
 
 <main class="wrap">
   <div id="banner" class="banner" role="alert" hidden><span aria-hidden="true">⚠️</span><p id="banner-msg"></p><button type="button" class="icon-btn" data-act="banner-close" aria-label="안내 닫기"><span data-ico="x"></span></button></div>
-  <div class="toolbar">
+  <div class="viewtabs" role="group" aria-label="보기 방식">
+    <button type="button" class="vtab" data-act="mode" data-mode="week" aria-pressed="true">주간</button>
+    <button type="button" class="vtab" data-act="mode" data-mode="month" aria-pressed="false">월간</button>
+  </div>
+  <div class="toolbar" id="toolbar">
     <button type="button" class="btn" data-act="shop"><span data-ico="cart"></span>장 볼 목록 보기</button>
     <button type="button" class="btn btn-sub" data-act="lastweek"><span data-ico="back"></span>지난주 식단 불러오기</button>
     <button type="button" class="btn btn-sub" data-act="copytext"><span data-ico="copy"></span>텍스트로 복사</button>
   </div>
   <div class="week" id="week"></div>
+  <div class="month" id="month" hidden></div>
 </main>
 
 <!-- 메뉴 편집 -->
@@ -576,6 +652,7 @@ label.lbl { display: block; font-size: 14px; font-weight: 600; margin: 10px 0 4p
   function dkey(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
   function pdate(k) { var p = k.split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]); }
   function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
+  function monthStart(d) { return new Date(d.getFullYear(), d.getMonth(), 1); }
   function weekStart(d) { return addDays(d, -((d.getDay() + 6) % 7)); }
   function dowIdx(d) { return (d.getDay() + 6) % 7; }
   function md(d) { return (d.getMonth() + 1) + '월 ' + d.getDate() + '일'; }
@@ -666,7 +743,8 @@ label.lbl { display: block; font-size: 14px; font-weight: 600; margin: 10px 0 4p
   function showBanner(msg) { $('#banner-msg').textContent = msg; $('#banner').hidden = false; }
 
   var db = load();
-  var view = { ws: weekStart(new Date()) };
+  var view = { ws: weekStart(new Date()), mode: 'week', ms: monthStart(new Date()) };
+  try { if (localStorage.getItem('meal.view') === 'month') view.mode = 'month'; } catch (e) {}
 
   function slot(k, m) { return (db.meals[k] && db.meals[k][m]) || []; }
   function setSlot(k, m, items) {
@@ -718,6 +796,56 @@ label.lbl { display: block; font-size: 14px; font-weight: 600; margin: 10px 0 4p
   /* ---------- 주간 화면 ---------- */
   function weekDays() { var a = []; for (var i = 0; i < 7; i++) a.push(addDays(view.ws, i)); return a; }
   function render() {
+    var isMonth = view.mode === 'month';
+    $('#week').hidden = isMonth; $('#toolbar').hidden = isMonth; $('#month').hidden = !isMonth;
+    $$('.vtab').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-mode') === view.mode)); });
+    var unit = isMonth ? '달' : '주';
+    $('[data-act="prev"]').setAttribute('aria-label', '이전 ' + unit); $('[data-act="prev"]').title = '이전 ' + unit;
+    $('[data-act="next"]').setAttribute('aria-label', '다음 ' + unit); $('[data-act="next"]').title = '다음 ' + unit;
+    $('#thisweek').textContent = '이번 ' + unit + '로';
+    if (isMonth) renderMonth(); else renderWeek();
+  }
+  function renderMonth() {
+    var ms = view.ms, todayK = dkey(new Date()), mon = ms.getMonth();
+    $('#range').textContent = ms.getFullYear() + '년 ' + (mon + 1) + '월';
+    $('#range').title = '';
+    $('#thisweek').disabled = dkey(ms) === dkey(monthStart(new Date()));
+    var start = weekStart(ms), last = new Date(ms.getFullYear(), mon + 1, 0);
+    var end = addDays(weekStart(last), 6), cells = [];
+    for (var d = start; d <= end; d = addDays(d, 1)) cells.push(d);
+    var html = DOW.map(function (w) { return '<div class="mdow" aria-hidden="true">' + w + '</div>'; }).join('');
+    html += cells.map(function (d) {
+      var k = dkey(d), out = d.getMonth() !== mon, isToday = k === todayK, parts = [], lines = '';
+      MEALS.forEach(function (m) {
+        var items = slot(k, m.k); if (!items.length) return;
+        var names = items.map(function (x) { return x.n; }).join(', ');
+        parts.push(m.n + ' ' + names);
+        lines += '<span class="mm m-' + m.k + '"><b>' + m.n + '</b>' + items.map(function (x) { return '<span class="mi">' + esc(x.n) + '</span>'; }).join('') + '</span>';
+      });
+      var label = md(d) + ' ' + DOW[dowIdx(d)] + '요일' + (isToday ? ' (오늘)' : '') + ': ' + (parts.length ? parts.join(', ') : '식단 없음') + '. 눌러서 주간 화면에서 편집';
+      return '<button type="button" class="mday' + (out ? ' out' : '') + (isToday ? ' today' : '') + '" data-act="openday" data-date="' + k + '" aria-label="' + esc(label) + '">' +
+        '<span class="mnum">' + d.getDate() + '</span>' + lines + '</button>';
+    }).join('');
+    $('#month').innerHTML =
+      '<div class="mlegend" aria-hidden="true">' + MEALS.map(function (m) { return '<span><i style="--mc:var(--m-' + m.k + ')"></i>' + m.n + '</span>'; }).join('') + '</div>' +
+      '<div class="mgrid">' + html + '</div>' +
+      '<p class="mhint">날짜를 누르면 그 주의 주간 화면에서 메뉴를 추가·수정할 수 있어요.</p>';
+  }
+  function setMode(mode) {
+    view.mode = mode;
+    try { localStorage.setItem('meal.view', mode); } catch (e) {}
+  }
+  function openDay(k) {
+    var d = pdate(k);
+    setMode('week'); view.ws = weekStart(d); view.ms = monthStart(d); render();
+    var el = $('.day[data-date="' + k + '"]');
+    if (!el) return;
+    if (window.innerWidth < 960) el.scrollIntoView({ block: 'start' }); else window.scrollTo(0, 0);
+    el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+    var first = $('.cell', el); if (first) first.focus({ preventScroll: true });
+  }
+  function goMonth(ms) { view.ms = ms; render(); window.scrollTo(0, 0); }
+  function renderWeek() {
     var days = weekDays();
     var todayK = dkey(new Date());
     $('#range').textContent = md(days[0]) + ' ~ ' + md(days[6]);
@@ -1138,9 +1266,17 @@ label.lbl { display: block; font-size: 14px; font-weight: 600; margin: 10px 0 4p
     var b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
     var act = b.getAttribute('data-act');
     if (act === 'edit') openEditor(b.getAttribute('data-date'), b.getAttribute('data-meal'));
-    else if (act === 'prev') goWeek(addDays(view.ws, -7));
-    else if (act === 'next') goWeek(addDays(view.ws, 7));
-    else if (act === 'today') goWeek(weekStart(new Date()), true);
+    else if (act === 'prev') { if (view.mode === 'month') goMonth(new Date(view.ms.getFullYear(), view.ms.getMonth() - 1, 1)); else goWeek(addDays(view.ws, -7)); }
+    else if (act === 'next') { if (view.mode === 'month') goMonth(new Date(view.ms.getFullYear(), view.ms.getMonth() + 1, 1)); else goWeek(addDays(view.ws, 7)); }
+    else if (act === 'today') { if (view.mode === 'month') goMonth(monthStart(new Date())); else goWeek(weekStart(new Date()), true); }
+    else if (act === 'mode') {
+      var md2 = b.getAttribute('data-mode'); if (md2 === view.mode) return;
+      if (md2 === 'month') view.ms = monthStart(addDays(view.ws, 3));
+      else { var t = new Date(); view.ws = (t.getFullYear() === view.ms.getFullYear() && t.getMonth() === view.ms.getMonth()) ? weekStart(t) : weekStart(view.ms); }
+      setMode(md2); render();
+      if (md2 === 'week') scrollToToday(); else window.scrollTo(0, 0);
+    }
+    else if (act === 'openday') openDay(b.getAttribute('data-date'));
     else if (act === 'copyday') {
       var k = b.getAttribute('data-date');
       if (!MEALS.some(function (m) { return slot(k, m.k).length; })) { toast('이 날은 아직 복사할 메뉴가 없어요'); return; }
@@ -1163,7 +1299,7 @@ label.lbl { display: block; font-size: 14px; font-weight: 600; margin: 10px 0 4p
   render();
   measureTop();
   window.addEventListener('resize', measureTop);
-  requestAnimationFrame(function () { measureTop(); scrollToToday(); });
+  requestAnimationFrame(function () { measureTop(); if (view.mode === 'week') scrollToToday(); });
   var lastDay = dkey(new Date());
   document.addEventListener('visibilitychange', function () {
     if (document.visibilityState === 'visible' && dkey(new Date()) !== lastDay) { lastDay = dkey(new Date()); render(); }

@@ -2,7 +2,7 @@
  * 파일(index.html, 아이콘 등)을 수정해서 다시 올릴 때는 아래 CACHE_VERSION의 숫자를 올려 주세요.
  * 예: 'meal-planner-v1' → 'meal-planner-v2'
  */
-const CACHE_VERSION = 'meal-planner-v1';
+const CACHE_VERSION = 'meal-planner-v2';
 const FONT_CACHE = 'meal-planner-fonts-v1';   // 폰트는 버전이 바뀌어도 유지
 
 const APP_FILES = [
